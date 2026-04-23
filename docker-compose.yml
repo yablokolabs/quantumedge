@@ -2,8 +2,12 @@ version: '3.9'
 services:
   rust-api:
     build: ./services/rust-api
+    environment:
+      OPTIMIZER_URL: http://python-optimizer:8099
     ports:
       - '8098:8098'
+    depends_on:
+      - python-optimizer
   python-optimizer:
     image: python:3.11-slim
     working_dir: /app

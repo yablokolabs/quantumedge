@@ -1,5 +1,5 @@
 use std::{collections::HashMap, sync::{Arc, Mutex}};
-use axum::{extract::{Path, State}, routing::{get, post}, Json, Router};
+use axum::{extract::{Multipart, Path, State}, routing::{get, post}, Json, Router};
 use serde::{Deserialize, Serialize};
 use tower_http::cors::CorsLayer;
 use uuid::Uuid;
@@ -89,6 +89,7 @@ async fn main() {
         .route("/jobs/optimize", post(create_job))
         .route("/jobs/:id", get(get_job))
         .route("/results/:id", get(get_result))
+        .route("/uploads/csv", post(upload_csv))
         .with_state(state)
         .layer(CorsLayer::permissive());
 
@@ -112,6 +113,24 @@ async fn create_scenario(Json(payload): Json<ScenarioRequest>) -> Json<serde_jso
         "template": payload.template,
         "solver_mode": payload.solver_mode,
         "status": "created"
+    }))
+}
+
+async fn upload_csv(mut multipart: Multipart) -> Json<serde_json::Value> {
+    let mut filename = "uploaded.csv".to_string();
+    let mut row_count = 0usize;
+    while let Some(field) = multipart.next_field().await.unwrap_or(None) {
+        if let Some(name) = field.file_name() {
+            filename = name.to_string();
+        }
+        if let Ok(text) = field.text().await {
+            row_count = text.lines().skip(1).count();
+        }
+    }
+    Json(serde_json::json!({
+        "status": "received",
+        "filename": filename,
+        "estimated_rows": row_count
     }))
 }
 
