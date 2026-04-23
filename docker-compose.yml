@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  rust-api:
+    build: ./services/rust-api
+    ports:
+      - '8098:8098'
+  python-optimizer:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./services/python-optimizer:/app
+    command: bash -lc "pip install -e . && uvicorn quantumedge_optimizer.main:app --host 0.0.0.0 --port 8099"
+    ports:
+      - '8099:8099'

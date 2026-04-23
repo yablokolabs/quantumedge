@@ -1,0 +1,5 @@
+ticker,expected_return,risk,price,sector,liquidity_score,current_weight
+UK_GILT_5Y,0.052,0.010,100,sovereign,0.98,0.25
+FTSE_BANKS_BASKET,0.131,0.087,115,financials,0.77,0.20
+GBP_LIQUIDITY,0.041,0.003,100,cash,1.00,0.25
+MIDCAP_ALPHA,0.164,0.121,95,equities,0.64,0.30

@@ -1,0 +1,50 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, system-ui, sans-serif;
+  background: #08111f;
+  color: #edf3ff;
+}
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #08111f 0%, #0d1b2e 100%);
+}
+.shell {
+  padding: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+header h1 {
+  margin-bottom: 8px;
+}
+.grid {
+  display: grid;
+  gap: 16px;
+  margin: 24px 0;
+}
+.grid.two { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.grid.three { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.card, .panel {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 20px;
+}
+.card.active { border-color: #72b6ff; }
+label { display: block; margin-bottom: 12px; }
+select {
+  display: block;
+  margin-top: 6px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background: #122038;
+  color: #edf3ff;
+  border: 1px solid #284362;
+}
+.metric {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}

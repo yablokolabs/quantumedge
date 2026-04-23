@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quantumedge-optimizer"
+version = "0.1.0"
+description = "QuantumEdge optimization service"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn>=0.30",
+  "pydantic>=2.8",
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "pytest>=8.3"
+]
+
+[project.optional-dependencies]
+quantum = [
+  "dimod>=0.12",
+  "dwave-hybrid>=0.6",
+  "dwave-ocean-sdk>=7.0"
+]
+
+[tool.setuptools.packages.find]
+include = ["quantumedge_optimizer*"]

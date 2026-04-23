@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "QuantumEdgeScenario",
+  "type": "object",
+  "required": ["name", "template", "assets", "constraints", "solver_mode"],
+  "properties": {
+    "name": { "type": "string" },
+    "template": { "type": "string" },
+    "solver_mode": { "type": "string", "enum": ["simulator", "hybrid", "hardware-ready"] },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ticker", "expected_return", "risk", "price", "sector", "liquidity_score"],
+        "properties": {
+          "ticker": { "type": "string" },
+          "expected_return": { "type": "number" },
+          "risk": { "type": "number" },
+          "price": { "type": "number" },
+          "sector": { "type": "string" },
+          "liquidity_score": { "type": "number" },
+          "current_weight": { "type": "number" }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "budget_cap": { "type": "number" },
+        "max_exposure_per_asset": { "type": "number" },
+        "sector_limits": { "type": "object", "additionalProperties": { "type": "number" } },
+        "minimum_return": { "type": "number" },
+        "max_variance": { "type": "number" },
+        "transaction_cost_bps": { "type": "number" },
+        "turnover_limit": { "type": "number" },
+        "min_liquidity_score": { "type": "number" }
+      }
+    }
+  }
+}

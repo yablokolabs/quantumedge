@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: quantumedge-optimizer
+Version: 0.1.0
+Summary: QuantumEdge optimization service
+Requires-Python: >=3.11
+Requires-Dist: fastapi>=0.115
+Requires-Dist: uvicorn>=0.30
+Requires-Dist: pydantic>=2.8
+Requires-Dist: numpy>=1.26
+Requires-Dist: pandas>=2.2
+Requires-Dist: pytest>=8.3
+Provides-Extra: quantum
+Requires-Dist: dimod>=0.12; extra == "quantum"
+Requires-Dist: dwave-hybrid>=0.6; extra == "quantum"
+Requires-Dist: dwave-ocean-sdk>=7.0; extra == "quantum"
