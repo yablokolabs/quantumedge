@@ -69,6 +69,98 @@ That output philosophy is intentional: the machine-readable payload is for integ
 - `examples` , sample datasets and demo scenarios
 - `docs` , architecture, onboarding, and API docs
 
+## Requirements
+- Python `3.11+`
+- Rust stable toolchain
+- Node.js `22+`
+- npm
+- Git
+
+## Quick start
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/yablokolabs/quantumedge.git
+cd quantumedge
+```
+
+### 2. Bootstrap dependencies
+```bash
+./scripts/bootstrap.sh
+```
+
+This script will:
+- create the Python virtual environment
+- install Python dependencies
+- run `cargo check` for the Rust API
+- install npm packages for the web app
+- build the web app once
+
+## Run the project locally
+
+### Terminal 1, start the Python optimizer
+```bash
+cd services/python-optimizer
+source .venv/bin/activate
+uvicorn quantumedge_optimizer.main:app --host 0.0.0.0 --port 8099 --reload
+```
+
+### Terminal 2, start the Rust API
+```bash
+cd services/rust-api
+OPTIMIZER_URL=http://127.0.0.1:8099 cargo run
+```
+
+The Rust API will start on:
+- `http://127.0.0.1:8098`
+
+### Terminal 3, start the web app
+```bash
+cd apps/web
+npm run dev -- --host 0.0.0.0 --port 5173
+```
+
+The web app will start on:
+- `http://127.0.0.1:5173`
+
+## Run with Docker Compose
+```bash
+docker compose up --build
+```
+
+This starts:
+- Rust API on `http://127.0.0.1:8098`
+- Python optimizer on `http://127.0.0.1:8099`
+
+## Test the backend quickly
+
+### Health check
+```bash
+curl http://127.0.0.1:8099/health
+```
+
+### List templates
+```bash
+curl http://127.0.0.1:8098/templates
+```
+
+### Create an optimization job
+```bash
+curl -X POST http://127.0.0.1:8098/jobs/optimize \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "template": "boutique-wealth-desk",
+    "solver_mode": "hybrid",
+    "annual_capital_gbp": 25000000
+  }'
+```
+
+### Upload a CSV file
+```bash
+curl -X POST http://127.0.0.1:8098/uploads/csv \
+  -F 'file=@examples/boutique-wealth-desk.csv'
+```
+
 ## Current state
 This repo contains a runnable local demo scaffold with:
 - simulator-first optimization workflows
@@ -76,16 +168,6 @@ This repo contains a runnable local demo scaffold with:
 - frontend shell for scenario building and result comparisons
 - shared schemas and example datasets
 - CI workflow and local bootstrap support
-
-## Quick start
-```bash
-./scripts/bootstrap.sh
-```
-
-Then use:
-- Rust API on `http://localhost:8098`
-- Python optimizer on `http://localhost:8099`
-- web app from `apps/web`
 
 ## Key docs
 - `docs/onboarding-analysts.md`
